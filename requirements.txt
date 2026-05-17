@@ -1,0 +1,14 @@
+# Ludus Neural Network — Chess Move Evaluator
+#
+# Pipeline :  Lichess PGN  →  Dataset  →  PyTorch training  →  ONNX export
+# Model  :    [1, 68] f32  →  3 couches linéaires  →  [1, 1] score
+
+torch>=2.0.0
+chess>=1.10.0          # parsing PGN + manipulation échiquier
+zstandard>=0.21.0      # décompression .pgn.zst (format Lichess)
+onnx>=1.14.0           # validation ONNX post-export
+onnxruntime>=1.16.0    # test inférence ONNX en Python
+tqdm>=4.65.0           # barres de progression
+pyyaml>=6.0.0          # config training
+numpy>=1.24.0
+matplotlib>=3.7.0      # courbes d'entrainement + diagramme reseau

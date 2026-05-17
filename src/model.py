@@ -8,6 +8,18 @@ Output : [batch, 1]   float32  (quality score)
 Deux variantes :
   - ChessEval   : simple (3 couches) — rapide, ~50KB ONNX ← recommandé pour débuter
   - ChessEvalBN : avec BatchNorm + Dropout — meilleure généralisation, plus lourd
+
+une Troisième variante  est l'intruduction de reseau de neurone NNUE(Efficiently Updatable Neural Network)
+qui est une architecture optimisée pour les moteurs d'échecs, offrant une évaluation rapide et précise des positions.
+et surtout produit une fiche wasm tres legere:
+Architecture :
+    Input : 768 features binaires (12 pièces × 64 cases)
+    FT    : Linear(768, H)  + ClippedReLU → accumulateur [H]
+    Head  : Linear(H+4, 64) + ReLU → Linear(64, 1)
+
+l'implementation est deja implememente dans train_nnue.py et export_nnue.py, mais n'est pas encore integré dans le pipeline de training et export classique.
+
+by @YmC
 """
 
 import torch
@@ -89,7 +101,7 @@ if __name__ == "__main__":
         params = sum(p.numel() for p in model.parameters())
         print(f"{name}: input={tuple(x.shape)} output={tuple(y.shape)} params={params:,}")
 
-        
+
 
 
 
